@@ -6,7 +6,23 @@ using System.Threading.Tasks;
 
 namespace Simple_ROMS
 {
-    internal class FoodItem
+    public abstract class FoodItem
     {
+        public string Name { get; set; }
+        public float Price { get; set; }
+
+        public FoodItem(string name, float price)
+        {
+            this.Name = name;
+            this.Price = price;
+        }
+
+        public abstract float CalculatePrice();
+
+        public override string ToString()
+        {
+            return $"{Name}: ${CalculatePrice(): 0}";
+        }
+
     }
 }
