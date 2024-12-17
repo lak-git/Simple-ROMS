@@ -21,19 +21,11 @@ namespace Simple_ROMS
 
         public void CalculateBill()
         {
-            float billCost = 0;
+            float billAmount = 0;
 
             foreach (var item in OrderedFood)
             {
-                if (item.Equals(Meal))
-                {
-                    // Add appropriate value
-                }
-
-                if (item.Equals(Beverage))
-                {
-                    //Add appropriate value
-                }
+                billAmount += item.CalculatePrice();
             }
         }
     }
