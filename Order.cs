@@ -12,16 +12,20 @@ namespace Simple_ROMS
 
         public Order()
         {
+            OrderedFood = new List<FoodItem>();
         }
 
         public void AddFoodItem(FoodItem food)
         {
-            OrderedFood.Add(food);
+            if (food != null) // Null check for safety
+            {
+                OrderedFood.Add(food);
+            }
         }
 
-        public float CalculateBill()
+        public double CalculateBill()
         {
-            float billAmount = 0;
+            double billAmount = 0;
 
             foreach (var item in OrderedFood)
             {

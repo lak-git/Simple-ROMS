@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -12,6 +13,7 @@ namespace Simple_ROMS
 {
     public partial class RestaurantBillingApp : Form
     {
+        private List<FoodItem> menuItems;
         public RestaurantBillingApp()
         {
             InitializeComponent();
@@ -20,35 +22,49 @@ namespace Simple_ROMS
 
         private void PopulateMenu()
         {
-            listBoxMenu.Items.Add("Beverage: Coffee - $3.00");
-            listBoxMenu.Items.Add("Beverage: Tea - $2.50");
-            listBoxMenu.Items.Add("Meal: Burger - $8.00");
-            listBoxMenu.Items.Add("Meal: Pizza - $10.00");
-            listBoxMenu.Items.Add("Beverage: Soda - $2.00");
-            listBoxMenu.Items.Add("Meal: Pasta - $9.00");
+            // Polymorphism
+            menuItems = new List<FoodItem>
+            {
+                new Meal("Pizza", 10.0),
+                new Meal("Burger", 8.0),
+                new Meal("Pasta", 9.0),
+                new Beverage("Coffee", 3.0),
+                new Beverage("Tea", 2.5),
+                new Beverage("Soda", 9.0)
+            };
+
+            foreach (FoodItem item in menuItems) 
+            {
+                listBoxMenu.Items.Add($"{item.Name} - ${item.Price:F2}");
+            }
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-            double total = 0; 
+            var order = new Order();
 
-            foreach (string selectedItem in listBoxMenu.SelectedItems)
+            foreach (int selectedIndex in listBoxMenu.SelectedIndices) 
             {
-                if (selectedItem.Contains("Coffee"))
-                    total += 3.00 * 0.90; 
-                else if (selectedItem.Contains("Tea"))
-                    total += 2.50 * 0.90;
-                else if (selectedItem.Contains("Soda"))
-                    total += 2.00 * 0.90;
-                else if (selectedItem.Contains("Burger"))
-                    total += 8.00 * 1.18; 
-                else if (selectedItem.Contains("Pizza"))
-                    total += 10.00 * 1.18;
-                else if (selectedItem.Contains("Pasta"))
-                    total += 9.00 * 1.18;
+                Console.WriteLine($"Selected Index: {selectedIndex}");
+                order.AddFoodItem(menuItems[selectedIndex]);
             }
 
-            lblTotalBill.Text = $"Total Bill: ${total:F2}";
+            DisplayOrder(order);
+
+        }
+
+        private void DisplayOrder(Order order)
+        {
+            StringBuilder sb = new StringBuilder();
+            sb.AppendLine("Customer Order:");
+
+            foreach (var item in order.OrderedFood) 
+            { 
+                sb.AppendLine($"{item.Name}: ${item.CalculatePrice():F2}");
+            }
+            sb.AppendLine($"Total Bill: ${order.CalculateBill():F2}");
+
+            OrderSummary.Text = sb.ToString();
         }
 
         private void label1_Click(object sender, EventArgs e)

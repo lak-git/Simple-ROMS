@@ -6,18 +6,19 @@ using System.Threading.Tasks;
 
 namespace Simple_ROMS
 {
-    public abstract class FoodItem
+    // Abstraction and Encapsulation
+    public abstract class FoodItem 
     {
-        public string Name { get; set; }
-        public float Price { get; set; }
+        public string Name { get; private set; }
+        public double Price { get; private set; }
 
-        public FoodItem(string name, float price)
+        public FoodItem(string name, double price)
         {
             this.Name = name;
             this.Price = price;
         }
 
-        public abstract float CalculatePrice();
+        public abstract double CalculatePrice();
 
         public override string ToString()
         {

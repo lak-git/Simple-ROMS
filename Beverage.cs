@@ -6,13 +6,15 @@ using System.Threading.Tasks;
 
 namespace Simple_ROMS
 {
+    // Inheritance
     internal class Beverage : FoodItem
     {
-        public Beverage(string name, float baseprice) : base(name, baseprice) { }
+        private const double Discount = 0.9; // 10% discount
+        public Beverage(string name, double baseprice) : base(name, baseprice) { }
 
-        public override float CalculatePrice()
+        public override double CalculatePrice()
         {
-            return Price * 0.9f;
+            return Price * Discount;
         }
     }
 }

@@ -8,11 +8,12 @@ namespace Simple_ROMS
 {
     internal class Meal : FoodItem
     {
-        public Meal(string name, float baseprice) : base(name, baseprice) { }
+        private const double ValueAddedTax = 1.18; //18% Vat
+        public Meal(string name, double baseprice) : base(name, baseprice) { }
 
-        public override float CalculatePrice()
+        public override double CalculatePrice()
         {
-            return Price * 1.18f;
+            return Price * ValueAddedTax;
         }
     }
 }
