@@ -19,7 +19,7 @@ namespace Simple_ROMS
             OrderedFood.Add(food);
         }
 
-        public void CalculateBill()
+        public float CalculateBill()
         {
             float billAmount = 0;
 
@@ -27,6 +27,8 @@ namespace Simple_ROMS
             {
                 billAmount += item.CalculatePrice();
             }
+
+            return billAmount;
         }
     }
 }
